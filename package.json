@@ -1,0 +1,19 @@
+{
+  "name": "task-management-application",
+  "version": "1.0.0",
+  "description": "Project Based on JavaScript , TypeScript , Express JS , Node JS , AJAX , MongoDB",
+  "main": "test.js",
+  "scripts": {
+    "start": "nodemon node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Devarsh Limbachiya and Aryan Jajadiya",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
