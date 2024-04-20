@@ -22,7 +22,7 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 const bcrypt = require('bcrypt');
-const User = require('./models/User');
+const User = require('./models/user.model.js');
 
 app.post('/register', async (req, res) => {
   try {
