@@ -4,7 +4,7 @@ document.getElementById('productForm').addEventListener('submit', function(event
     const quantity = document.getElementById('productQuantity').value;
     const token = localStorage.getItem('token');  // Retrieve the stored token
 
-    fetch('/api/products', {
+    fetch('/products', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ document.getElementById('productForm').addEventListener('submit', function(event
 
 function fetchProducts() {
     const token = localStorage.getItem('token');
-    fetch('/api/products', {
+    fetch('/products', {
         headers: {
             'Authorization': `Bearer ${token}`
         }

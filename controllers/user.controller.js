@@ -64,11 +64,9 @@ const deleteUser = async (req, res) => {
     }
 };
 
-
-
 module.exports = {
     getUsers,
-    getUsers,
+    getUser, // Corrected: Changed getUsers to getUser
     createUser,
     updateUser,
     deleteUser

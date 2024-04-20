@@ -15,8 +15,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         if (data.token) {
             console.log('Logged in:', data);
             localStorage.setItem('token', data.token);  // Store the token
-            // Redirect or enable product management functionality
-            window.location.href = 'product.html'; // Redirect to product management page
+            // Check if the token is valid before redirecting
+            checkTokenAndRedirect();
         } else {
             throw new Error('Failed to log in');
         }
@@ -26,3 +26,15 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         alert('Login failed: ' + error.message);
     });
 });
+
+function checkTokenAndRedirect() {
+    const token = localStorage.getItem('token');
+    if (token) {
+        // Perform token validation on the server side (optional)
+        // Assuming token is valid, redirect to product management page
+        window.location.href = 'product.html';
+    } else {
+        // If token is not present, redirect to login page
+        window.location.href = 'login.html';
+    }
+}

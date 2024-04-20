@@ -2,18 +2,14 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+require('dotenv').config(); // Load environment variables from .env file
+
 app.use(express.json());
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://devarsh12092003:<password>@clusterdev.txww7ae.mongodb.net/?retryWrites=true&w=majority&appName=ClusterDev', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-});
+mongoose.connect(process.env.DB_CONNECT);
 
 const db = mongoose.connection;
 
@@ -21,8 +17,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB');
 });
+
 const bcrypt = require('bcrypt');
 const User = require('./models/user.model.js');
+const jwt = require('jsonwebtoken');
 
 app.post('/register', async (req, res) => {
   try {
@@ -38,7 +36,6 @@ app.post('/register', async (req, res) => {
     res.status(500).send('Error registering user');
   }
 });
-const jwt = require('jsonwebtoken');
 
 app.post('/login', async (req, res) => {
   try {
@@ -50,45 +47,32 @@ app.post('/login', async (req, res) => {
     if (!validPassword) {
       return res.status(401).send('Invalid password');
     }
-    const token = jwt.sign({ userId: user._id }, 'secret_key');
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
     res.status(200).json({ token });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error logging in');
   }
 });
-function authenticateToken(req, res, next) {
-    const token = req.headers['authorization'];
-    if (!token) {
-      return res.status(401).send('Unauthorized');
-    }
-    jwt.verify(token, 'secret_key', (err, user) => {
-      if (err) {
-        return res.status(403).send('Forbidden');
-      }
-      req.user = user;
-      next();
-    });
-  }
-  app.get('/protected-route', authenticateToken, (req, res) => {
-    res.send('Protected route');
-  });
-  const Task = require('./models/Task');
 
-app.post('/add-task', authenticateToken, async (req, res) => {
-  try {
-    const newTask = new Task({
-      description: req.body.description,
-      user: req.user.userId
-    });
-    await newTask.save();
-    res.status(201).send('Task added successfully');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error adding task');
+function authenticateToken(req, res, next) {
+  const token = req.headers['authorization'];
+  if (!token) {
+    return res.status(401).send('Unauthorized');
   }
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).send('Forbidden');
+    }
+    req.user = user;
+    next();
+  });
+}
+
+app.get('/protected-route', authenticateToken, (req, res) => {
+  res.send('Protected route');
 });
 
-  
-  
-
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
