@@ -1,4 +1,4 @@
-# Task-Management-Application
+# Product-Management-Application
 Project Based on JavaScript , TypeScript , Express JS , Node JS , AJAX , MongoDB
 
 Description: The Online Task Management Application is a client-side scripting project aimed
