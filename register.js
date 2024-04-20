@@ -1,0 +1,27 @@
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    fetch('/api/users/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.user && data.token) {
+            console.log('Registration successful:', data);
+            window.location.href = '/login.html'; // Redirect to login page or home page
+        } else {
+            throw new Error('Registration failed');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Failed to register: ' + error.message);
+    });
+});

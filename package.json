@@ -4,13 +4,16 @@
   "description": "Project Based on JavaScript , TypeScript , Express JS , Node JS , AJAX , MongoDB",
   "main": "test.js",
   "scripts": {
-    "start": "nodemon node main.js",
+    "start": "nodemon node login.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Devarsh Limbachiya and Aryan Jajadiya",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.5.0",
     "mongoose": "^8.3.2"
   },
   "devDependencies": {
