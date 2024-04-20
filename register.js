@@ -4,7 +4,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    fetch('/users', {
+    fetch('/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -15,7 +15,8 @@ document.getElementById('registerForm').addEventListener('submit', function(even
     .then(data => {
         if (data.user && data.token) {
             console.log('Registration successful:', data);
-            window.location.href = '/login.html'; // Redirect to login page or home page
+            // Redirect to login page or home page
+            window.location.href = '/login.html';
         } else {
             throw new Error('Registration failed');
         }
